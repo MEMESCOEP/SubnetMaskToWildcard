@@ -1,13 +1,21 @@
 ### [===== SUBNET TO WILDCARD CONVERTER =====] ###
 # For IPv4 networks; This can also convert wildcards to subnet masks
+# Requires Python 3.3 or later
+
+## IMPORTS ##
+import ipaddress
 
 ## VARIABLES ##
 SubnetParts = []
+SubnetMask = ""
+PrefixLen = 0
 Wildcard = ""
-SubnetMask = input("Enter an IPv4 subnet mask (EX: 255.255.255.0) >> ")
 
 ## MAIN CODE ##
 try:
+    # Ask the user to enter an IPv4 subnet mask
+    SubnetMask = input("Enter an IPv4 subnet mask (EX: 255.255.255.0) >> ")
+    
     # Split the subnet into 4 parts.
     SubnetParts = SubnetMask.split('.')
 
@@ -40,13 +48,16 @@ try:
         # The '&' (bitwise AND) operator results in 1 if both bits are 1, otherwise, it results in 0
         # See https://www.geeksforgeeks.org/python-bitwise-operators/ for more information
         Wildcard += '.' + str(~part & 0xFF)
+
+        # Find the prefix length from the subnet mask in bits (Slash notation)
+        PrefixLen = ipaddress.IPv4Network((0, SubnetMask)).prefixlen
         
     # Remove the first character from the wildcard string
     # We don't need a period at the beginning, and it just looks wrong lol
     Wildcard = Wildcard[1:]
 
     # Output the result to the console
-    print(f"The wildcard for {SubnetMask} is {Wildcard}.")
+    print(f"The wildcard for [/{PrefixLen}] {SubnetMask} is {Wildcard}")
 
 except Exception as ex:
     print(f"[ERROR] >> {ex}")
