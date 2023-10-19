@@ -1,10 +1,10 @@
 ### [===== SUBNET TO WILDCARD CONVERTER =====] ###
-# This also works in reverse
+# For IPv4 networks; This can also convert wildcards to subnet masks
 
 ## VARIABLES ##
 SubnetParts = []
 Wildcard = ""
-SubnetMask = input("Enter a subnet mask (EX: 255.255.255.0) >> ")
+SubnetMask = input("Enter an IPv4 subnet mask (EX: 255.255.255.0) >> ")
 
 ## MAIN CODE ##
 try:
